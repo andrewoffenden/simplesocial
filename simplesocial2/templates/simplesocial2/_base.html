@@ -1,0 +1,73 @@
+<!-- templates/simplesocial2/_base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Simple Social Media 2{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'simplesocial2/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'simplesocial2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'simplesocial2/css/ssoc2.css' %}">
+</head>
+<body>
+    <header>
+    <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md w3-theme navbar-dark fixed-top">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" style="width:40px;"></a>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Link 1</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Link 2</a>
+                    </li>
+
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Computer Lab
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">W3 Schools</a>
+                        <a class="dropdown-item" href="#">Blender 2.83</a>
+                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="#">Link 1</a>
+                    </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Link 1</a>
+                        <a class="dropdown-item" href="#">Link 2</a>
+                        <a class="dropdown-item" href="#">Link 3</a>
+                    </div>
+                    </li>
+
+                </ul>
+            </div>
+        </nav><br>
+    </header>
+    <div class="container-fluid" style="margin-top:80px;">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+<!-- Javascript -->
+<script src="{% static 'simplesocial2/js/jquery.min.js' %}"></script>
+<script src="{% static 'simplesocial2/js/popper.min.js' %}"></script>
+<script src="{% static 'simplesocial2/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

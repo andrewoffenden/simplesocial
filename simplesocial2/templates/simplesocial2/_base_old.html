@@ -1,0 +1,38 @@
+<!-- templates/simplesocial2/_base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Simple Social Media 2{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'simplesocial2/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'simplesocial2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'simplesocial2/css/ssoc2.css' %}">
+</head>
+<body>
+    <header>
+    <!-- Fixed navbar -->
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm w3-theme">
+        <a href="{% url 'home' %}" class="navbar-brand my-0 mr-md-auto font-weight-normal text-light">Home</a>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="#">About</a>
+            {% if user.is_authenticated %}
+                <a class="p-2 text-dark" href="{% url 'logout' %}">Logout<i class="fa fa-sign-out"></i></a>
+            {% else %}
+                <a class="p-2 text-dark" href="{% url 'login' %}">Login<i class="fa fa-sign-in"></i></a>
+            {% endif %}
+        </nav>
+    </div>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+<!-- Javascript -->
+<script src="{% static 'simplesocial2/js/jquery.min.js' %}"></script>
+<script src="{% static 'simplesocial2/js/popper.min.js' %}"></script>
+<script src="{% static 'simplesocial2/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
