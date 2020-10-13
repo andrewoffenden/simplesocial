@@ -5,12 +5,173 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    <h1>Homepage</h1>
-    {% if user.is_authenticated %}
-        Hi {{ user.username }}
-        <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% else %}
-        <p>You are not logged in</p>
-        <a href="{% url 'login' %}">Log In</a>
-    {% endif %}
+    <div class="row">
+
+	<!-- Left Column -->
+    <div class="col-md-3" style="">
+    	<!-- Profile Card Logged In -->
+        {% if user.is_authenticated %}
+		<div class="card shadow-sm align-self-start mx-auto" style="max-width:300px;">
+			<img class="card-img-top rounded-circle mx-auto pt-3" src="{% static 'simplesocial2/images/img_avatar3.png' %}" alt="" style="width:75%">
+			<div class="card-body">
+				<h4 class="card-title text-center">{{ user.first_name }} {{ user.last_name }}</h4>
+				<h5 class="text-center">{{ user.username }}</h5>
+				<div class="btn-group-vertical btn-block">
+					<button type="button" class="btn w3-theme-d1 text-left" onclick="window.location.assign('{% url 'logout' %}');">Sign Out</button>
+					<div class="btn-group dropdown dropright">
+						<button type="button" class="btn w3-theme-d1 dropdown-toggle text-left" data-toggle="dropdown">Settings</button>
+						<div class="dropdown-menu btn-block">
+							<a class="dropdown-item" href="#">Change Password</a>
+							<a class="dropdown-item" href="#">Change Picture</a>
+						</div>
+					</div>
+					<button type="button" class="btn w3-theme-d1 text-left">Search Users</button>
+					<button type="button" class="btn w3-theme-d1 text-left">Friends</button>
+				</div>
+			</div>
+		</div>
+        {% else %}
+		<!-- Profile Card Logged Out -->
+		<div class="card shadow-sm align-self-start mx-auto" style="max-width:300px;">
+			<div class="card-body">
+				<h4 id="signintitle" class="card-title text-center">Robert Janss Website</h4>
+				<p  id="signindesc" class="text-justify">Welcome to our website. Please sign in to get the full experience of the website.</p>
+				<div class="btn-group-vertical btn-block">
+					<button type="button" class="btn w3-theme-d1 text-left" onclick="window.location.assign('{% url 'login' %}');">Sign In</button>
+				</div>
+			</div>
+		</div>
+        {% endif %}
+    </div>
+
+	<!-- Middle Column -->
+    <div class="col-md" style="">
+		<!-- Nav pills -->
+		<ul class="nav nav-pills" role="tablist">
+			<li class="nav-item">
+		  		<a class="nav-link active ssoc-active" data-toggle="pill" href="#siteposts" onclick="$('#sitenew').fadeOut('fast')">Site Posts <span id="sitenew" class="badge badge-warning" style="display:none;">New</span></a>
+			</li>
+            {% if user.is_authenticated %}
+			<li class="nav-item">
+		  		<a class="nav-link ssoc-active" data-toggle="pill" href="#groupposts" onclick="$('#groupnew').fadeOut('fast')">Group Posts <span id="groupnew" class="badge badge-warning" style="display:none;">New</span></a>
+			</li>
+			<li class="nav-item">
+		  		<a class="nav-link ssoc-active" data-toggle="pill" href="#friendposts" onclick="$('#friendnew').fadeOut('fast')">Friend Posts <span id="friendnew" class="badge badge-warning" style="display:none;">New</span></a>
+			</li>
+			<li>
+				<a class="nav-link ssoc-active" data-toggle="pill" href="#yourposts">Your Posts</a>
+			</li>
+			<li>
+				<a class="nav-link ssoc-active" data-toggle="pill" href="#browseposts">Browse Posts</a>
+			</li>
+            {% if user.is_superuser %}
+			<li>
+				<a class="nav-link ssoc-active" data-toggle="pill" href="#administration">Administration</a>
+			</li>
+            {% endif %}
+            {% endif %}
+		</ul>
+		
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div id="siteposts" class="container tab-pane active"><br>
+					<h3>Site Information</h3>
+			  		{% if user.is_superuser %}
+                    <button type="button" class="btn w3-theme mb-3">Add Post</button>
+                    {% endif %}
+				<article class="media border rounded p-3 shadow bg-white">
+					<img src="{% static 'simplesocial2/images/img_avatar3.png' %}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+					<div class="media-body">
+						<h4>John Doe <small><i>Posted on February 19, 2016 at 13:24</i></small></h4>
+						<!-- Picture -->
+						<div class="d-flex justify-content-center p-3"><img src="{% static 'simplesocial2/images/Apples_Cycles_02_4k.png' %}" alt="Post Picture" class="" style="width:50%;"></div>
+						<!-- Post text -->
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<!-- Comment Buttons -->
+						<div class="btn-group">
+							<button type="button" class="btn w3-theme-d2">Likes <span class="badge badge-pill badge-secondary">0</span></button>
+							<button type="button" class="btn w3-theme-d2" onclick="$(this).parent().siblings('#comments').fadeToggle();">Comments <span class="badge badge-pill badge-secondary">0</span></button>
+							<button type="button" class="btn w3-theme-d2">Add Comment</button>
+						</div>
+						<div id="comments" style="display:none;">
+							<div class="media p-3">
+								<img src="{% static 'simplesocial2/images/img_avatar2.png' %}" alt="Jane Doe" class="mr-3 mt-3 rounded-circle" style="width:45px;">
+								<div class="media-body">
+									<h4>Jane Doe <small><i>Posted on February 20 2016</i></small></h4>
+						  			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						  			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div id="groupposts" class="container tab-pane fade"><br>
+			  	<h3>Group Posts</h3>
+			  	<div class="btn-group">
+					<button type="button" class="btn w3-theme">Join/Leave Group</button>
+					<button type="button" class="btn w3-theme">Add Group Post</button>
+				</div>
+			</div>
+			<div id="friendposts" class="container tab-pane fade"><br>
+				<h3>Friend Posts</h3>
+			  	<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+			</div>
+			<div id="yourposts" class="container tab-pane fade"><br>
+				<h3>Your Posts</h3>
+				<button type="button" class="btn w3-theme">Add Post</button>
+				<p></p>
+			</div>
+			<div id="browseposts" class="container tab-pane fade"><br>
+				<h3>Browse Posts</h3>
+				<div class="btn-group">
+					<button type="button" class="btn w3-theme">All Group Posts</button>
+					<div class="btn-group">
+						<button type="button" class="btn dropdown-toggle w3-theme" data-toggle="dropdown">All User Posts</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">By Lastname</a>
+							<a class="dropdown-item" href="#">By Post Count</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="administration" class="container tab-pane fade"><br>
+				<h3>Administration</h3>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" href="#home">Accounts / Groups</a>
+					</li>
+				  	<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#menu1">Collaboration Groups</a>
+				  	</li>
+				  	<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#menu2">Navigation Bar</a>
+				  	</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#menu3">Site Settings</a>
+				  	</li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+				  	<div class="tab-pane container active" id="home">...</div>
+				  	<div class="tab-pane container fade" id="menu1">...</div>
+				  	<div class="tab-pane container fade" id="menu2">...</div>
+					<div class="tab-pane container fade" id="menu3">...</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Right Column -->
+    <div class="col-md-2">
+    	<!-- Ad template -->
+		<div class="card shadow-sm mx-auto" style="cursor:pointer;max-width:240px;" onclick="window.open('#');">
+		  <div class="card-header w3-theme-d3">Ad Header</div>
+		  <div class="card-body">Ad Content</div>
+		  <!-- <div class="card-footer">Footer</div> -->
+		</div>
+	</div>
+    </div>
 {% endblock content %}

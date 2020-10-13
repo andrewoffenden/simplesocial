@@ -24,3 +24,7 @@
 .w3-hover-theme:hover {color:#fff !important; background-color:#3e65a0 !important}
 .w3-hover-text-theme:hover {color:#3e65a0 !important}
 .w3-hover-border-theme:hover {border-color:#3e65a0 !important}
+
+.nav-link.active.ssoc-active {
+		background-color: #3e65a0;
+	}
