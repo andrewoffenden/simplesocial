@@ -21,7 +21,7 @@ class UserPostCommentAdmin(admin.ModelAdmin):
 admin.site.register(ssoc.UserPostComment, UserPostCommentAdmin)
 
 class SitePostAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['username', 'post']
 
 admin.site.register(ssoc.SitePost, SitePostAdmin)
 
@@ -29,3 +29,43 @@ class SiteSettingAdmin(admin.ModelAdmin):
     list_display = ['name', 'value']
 
 admin.site.register(ssoc.SiteSetting, SiteSettingAdmin)
+
+class FriendRequestAdmin(admin.ModelAdmin):
+    list_display = ['request_by', 'request_to', 'request_answer', 'request_date', 'answer_date']
+
+admin.site.register(ssoc.FriendRquest, FriendRequestAdmin)
+
+class CollaborationGroupAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.CollaborationGroup, CollaborationGroupAdmin)
+
+class CollaborationGroupPostAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.CollaborationGroupPost, CollaborationGroupPostAdmin)
+
+class CollaborationGroupPostCommentAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.CollaborationGroupPostComment, CollaborationGroupPostCommentAdmin)
+
+class NavBarDropdownAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.NavBarDropdown, NavBarDropdownAdmin)
+
+class NavBarDropdownCategoryAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.NavBarDropdownCategory, NavBarDropdownCategoryAdmin)
+
+class NavBarLinkAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.NavBarLink, NavBarLinkAdmin)
+
+class AdAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ssoc.Ad, AdAdmin)
