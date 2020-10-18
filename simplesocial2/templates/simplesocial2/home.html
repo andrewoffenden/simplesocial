@@ -2,7 +2,7 @@
 {% extends 'simplesocial2/_base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}{% if site_name %}{{ site_name.value }}{% else %}Home{% endif %}{% endblock title %}
 
 {% block content %}
     <div class="row">
@@ -79,6 +79,30 @@
 			  		{% if user.is_superuser %}
                     <button type="button" class="btn w3-theme mb-3">Add Post</button>
                     {% endif %}
+					{% for site_post in sitepost %} 
+					<article class="media border rounded p-3 mb-3 shadow bg-white">
+						{% if site_post.username.avatar %}
+						<img src="{% get_media_prefix %}{{ site_post.username.avatar }}" alt="{{ site_post.username }}" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+						{% endif %}
+						<div class="media-body">
+							<h4>{{ site_post.username }} <small><i>Posted on {{ site_post.postdate }}</i></small></h4>
+							<!-- Site Post Picture -->
+							{% if site_post.postpic %}
+							<div class="d-flex justify-content-center p-3"><img src="{% get_media_prefix %}{{ site_post.postpic }}" alt="Post Picture" class="" style="width:50%;"></div>
+							{% endif %}
+							<!-- Post text -->
+							<p class="p-3">{{ site_post.post }}</p>
+							<!-- Comment Buttons -->
+							<div class="btn-group">
+								<button type="button" class="btn w3-theme-d2">Likes <span class="badge badge-pill badge-secondary">0</span></button>
+								<button type="button" class="btn w3-theme-d2" onclick="$(this).parent().siblings('#comments').slideToggle();">Comment <span class="badge badge-pill badge-secondary">0</span></button>
+								<button type="button" class="btn w3-theme-d2">Add Comment</button>
+							</div>
+							<div id="comments" style="display:none;">
+							</div>
+						</div>
+					</article>
+					{% endfor %}
 				<article class="media border rounded p-3 shadow bg-white">
 					<img src="{% static 'simplesocial2/images/img_avatar3.png' %}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
 					<div class="media-body">
@@ -90,7 +114,7 @@
 						<!-- Comment Buttons -->
 						<div class="btn-group">
 							<button type="button" class="btn w3-theme-d2">Likes <span class="badge badge-pill badge-secondary">0</span></button>
-							<button type="button" class="btn w3-theme-d2" onclick="$(this).parent().siblings('#comments').fadeToggle();">Comments <span class="badge badge-pill badge-secondary">0</span></button>
+							<button type="button" class="btn w3-theme-d2" onclick="$(this).parent().siblings('#comments').slideToggle();">Comments <span class="badge badge-pill badge-secondary">0</span></button>
 							<button type="button" class="btn w3-theme-d2">Add Comment</button>
 						</div>
 						<div id="comments" style="display:none;">

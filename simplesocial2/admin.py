@@ -33,7 +33,7 @@ admin.site.register(ssoc.SiteSetting, SiteSettingAdmin)
 class FriendRequestAdmin(admin.ModelAdmin):
     list_display = ['request_by', 'request_to', 'request_answer', 'request_date', 'answer_date']
 
-admin.site.register(ssoc.FriendRquest, FriendRequestAdmin)
+admin.site.register(ssoc.FriendRequest, FriendRequestAdmin)
 
 class CollaborationGroupAdmin(admin.ModelAdmin):
     pass

@@ -1,7 +1,9 @@
 # simplesocial2/urls.py
 from django.urls import path
-from .views import HomePageView
+#from .views import HomePageView
+from . import views
 
 urlpatterns = [
-    path('', HomePageView.as_view(), name='home'),
+    path('', views.homepage, name='home'),
+    path('simplesocial2/sitepost/add', views.AddSitePostView.as_view(), name="add_site_post"),
 ]

@@ -1,7 +1,35 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import TemplateView
-
+from django.views.generic.edit import FormView, CreateView
+from . import models
+from . import forms
+from django import forms as djforms
+from django.forms import modelform_factory
 # Create your views here.
+
+def homepage(request):
+    try:
+        site_name = models.SiteSetting.objects.get(name='sitename')
+    except models.SiteSetting.DoesNotExist:
+        site_name = {'value':'Simple Social Media'}
+
+    sitepost = models.SitePost.objects.order_by('postdate')
+    
+    context = {'site_name':site_name, 'sitepost':sitepost, 'current_user':request.user}
+    return render(request, 'simplesocial2/home.html', context)
 
 class HomePageView(TemplateView):
     template_name = 'simplesocial2/home.html'
+
+class AddSitePostView(LoginRequiredMixin, CreateView):
+    #model = models.SitePost
+    #username = djforms.HiddenInput()
+    #form_class = forms.AddSitePostForm
+    form_class = modelform_factory(models.SitePost, form=forms.AddSitePostForm, fields='__all__', widgets={'username': djforms.HiddenInput()})
+    template_name = 'simplesocial2/sitepost.html'
+    #fields = ['post','postpic','username']
+
+    def form_valid(self, form):
+        form.instance.username = self.request.user
+        return super().form_valid(form)

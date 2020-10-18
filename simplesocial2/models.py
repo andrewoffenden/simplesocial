@@ -19,16 +19,20 @@ def group_comment_upload_dir(instance, filename):
     return 'user_{0}/group_comment_{1}/{2}'.format(instance.username, instance.id, filename)
 
 def site_post_upload_dir(instance, filename):
-    return 'site_post_{0}/user_{1}/{2}'.format(instance.id,instance.username, filename)
+    return 'site_post_pics/site_post_{0}/user_{1}/{2}'.format(instance.id,instance.username, filename)
 
 def navbar_icon_upload_dir(instance, filename):
     return 'navbar/{0}/{1}'.format(instance.name, filename)
+
+def userprofile_avatar_upload_dir(instance, filename):
+    return 'avatars/{0}/{1}'.format(instance.username, filename)
 
 class UserProfile(models.Model):
     username = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
     )
+    avatar = models.ImageField(upload_to=userprofile_avatar_upload_dir, null=True, blank=True)
     friends = models.ManyToManyField('self',blank=True)
     
     def __str__(self):
@@ -36,7 +40,7 @@ class UserProfile(models.Model):
 
 class UserPost(models.Model):
     username = models.ForeignKey(
-        User,
+        UserProfile,
         on_delete=models.CASCADE,
     )
     post = models.TextField(max_length=1024)
@@ -50,7 +54,7 @@ class UserPostComment(models.Model):
         on_delete=models.CASCADE,
     )
     username = models.ForeignKey(
-        User,
+        UserProfile,
         on_delete=models.CASCADE,
     )
     comment = models.TextField(max_length=1024)
@@ -60,7 +64,7 @@ class UserPostComment(models.Model):
 
 class SitePost(models.Model):
     username = models.ForeignKey(
-        User,
+        UserProfile,
         on_delete=models.CASCADE,
     )
     post = models.TextField(max_length=1024)
@@ -73,12 +77,12 @@ class SiteSetting(models.Model):
     name = models.CharField(max_length=255)
     value = models.CharField(max_length=255)
 
-class FriendRquest(models.Model):
+class FriendRequest(models.Model):
     # This table will hold the friend requests
     # and will be checked for someone to
     # answer request.
-    request_by = models.ForeignKey(User, related_name='request_by', on_delete=models.CASCADE)
-    request_to = models.ForeignKey(User, related_name='request_to', on_delete=models.CASCADE)
+    request_by = models.ForeignKey(UserProfile, related_name='request_by', on_delete=models.CASCADE)
+    request_to = models.ForeignKey(UserProfile, related_name='request_to', on_delete=models.CASCADE)
     request_answer = models.BooleanField(blank=True, null=True)
     request_date = models.DateTimeField(auto_now_add=True)
     answer_date = models.DateTimeField(blank=True, null=True)
@@ -92,7 +96,7 @@ class CollaborationGroup(models.Model):
 
 class CollaborationGroupPost(models.Model):
     collaboration_group = models.ForeignKey(CollaborationGroup, on_delete=models.CASCADE)
-    username = models.ForeignKey(User, related_name='group_post_username', on_delete=models.CASCADE)
+    username = models.ForeignKey(UserProfile, related_name='group_post_username', on_delete=models.CASCADE)
     post = models.TextField(max_length=1024)
     postpic = models.ImageField(upload_to=group_post_upload_dir, blank=True,null=True)
     postdate = models.DateTimeField(auto_now_add=True)
@@ -100,7 +104,7 @@ class CollaborationGroupPost(models.Model):
 
 class CollaborationGroupPostComment(models.Model):
     collaboration_group_post = models.ForeignKey(CollaborationGroupPost, on_delete=models.CASCADE)
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     comment = models.TextField(max_length=1024)
     commentpic = models.ImageField(upload_to=group_comment_upload_dir, blank=True, null=True)
     commentdate = models.DateTimeField(auto_now_add=True)

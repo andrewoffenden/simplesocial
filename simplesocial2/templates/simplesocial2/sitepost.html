@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+
+<h5>Add a site post</h5>
+<form method="post">
+{% csrf_token %}
+{% for test in form %}{% endfor %}
+{{ form|crispy:"bootstrap" }}
+
+<button class="btn w3-theme-d1" type="submit">Add Post</button>
+</form>

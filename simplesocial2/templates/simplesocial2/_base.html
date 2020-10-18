@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="{% static 'simplesocial2/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'simplesocial2/css/ssoc2.css' %}">
 </head>
-<body>
+<body class="w3-theme-l4">
     <header>
     <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md w3-theme navbar-dark fixed-top">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"><img src="{% static 'simplesocial2/images/logo.png' %}" alt="Logo" style="width:40px;"></a>
+            <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'simplesocial2/images/logo.png' %}" alt="Logo" style="width:40px;"></a>
 
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -64,8 +64,13 @@
     <div class="container-fluid" style="margin-top:80px;">
         {% block content %}
         {% endblock content %}
-    </div>
+    </div><br>
 
+    <div class="d-flex align-content-end">
+    <footer class="jumbotron jumbotron-fluid flex-fill w3-theme text-center" style="margin-bottom:0px;">
+    <p>Simple Social powered by Django</p>
+    </footer>
+    </div>
 <!-- Javascript -->
 <script src="{% static 'simplesocial2/js/jquery.min.js' %}"></script>
 <script src="{% static 'simplesocial2/js/popper.min.js' %}"></script>
