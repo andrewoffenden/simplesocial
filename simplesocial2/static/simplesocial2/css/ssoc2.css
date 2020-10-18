@@ -28,3 +28,7 @@
 .nav-link.active.ssoc-active {
 		background-color: #3e65a0;
 	}
+
+.nav-link.active.ssoc-active-tabs {
+    color:#fff !important; background-color:#5a83bf !important
+}

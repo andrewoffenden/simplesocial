@@ -14,9 +14,15 @@ def homepage(request):
     except models.SiteSetting.DoesNotExist:
         site_name = {'value':'Simple Social Media'}
 
-    sitepost = models.SitePost.objects.order_by('postdate')
-    
+    sitepost = models.SitePost.objects.order_by('-postdate')
     context = {'site_name':site_name, 'sitepost':sitepost, 'current_user':request.user}
+    
+    # If the this view is loaded with a logged in user
+    # thne pull the the posts for that specific user
+    if request.user.is_authenticated:
+        userpost = models.UserPost.objects.filter(username__username=request.user).order_by('-postdate')
+        context['userpost'] = userpost
+    
     return render(request, 'simplesocial2/home.html', context)
 
 class HomePageView(TemplateView):
