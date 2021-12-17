@@ -10,10 +10,10 @@ from django.db.models import Q
 # Create your views here.
 
 def homepage(request):
-    try:
-        site_name = models.SiteSetting.objects.get(name='sitename')
-    except models.SiteSetting.DoesNotExist:
-        site_name = {'value':'Simple Social Media'}
+    # try:
+    #     site_name = models.SiteSetting.objects.get(name='sitename')
+    # except models.SiteSetting.DoesNotExist:
+    site_name = {'value':'Simple Social Media'}
 
     sitepost = models.SitePost.objects.order_by('-postdate')
     context = {'site_name':site_name, 'sitepost':sitepost, 'current_user':request.user}
