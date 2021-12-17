@@ -33,10 +33,11 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
     )
     avatar = models.ImageField(upload_to=userprofile_avatar_upload_dir, null=True, blank=True)
-    friends = models.ManyToManyField('self',blank=True)
+    friends = models.ManyToManyField('self',blank=True, related_name='myfriends')
     
     def __str__(self):
         return str(self.username)
+
 
 class UserPost(models.Model):
     username = models.ForeignKey(

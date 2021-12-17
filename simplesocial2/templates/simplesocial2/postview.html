@@ -1,0 +1,32 @@
+{% load static %}
+<article class="media border rounded p-3 mb-3 shadow bg-white" id="{{ user_post.id }}">
+    {% if user_post.username.avatar %}
+    <img src="{% get_media_prefix %}{{ user_post.username.avatar }}" alt="{{ user_post.username }}" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+    {% endif %}
+    <div class="media-body">
+        <h4>{{ user_post.username.username.first_name }} {{ user_post.username.username.last_name }} <small><i>Posted on {{ user_post.postdate }}</i></small></h4>
+        <!-- Site Post Picture -->
+        {% if user_post.postpic %}
+        <div class="d-flex justify-content-center p-3"><img src="{% get_media_prefix %}{{ user_post.postpic }}" alt="Post Picture" class="" style="width:50%;"></div>
+        {% endif %}
+        <!-- Post text -->
+        <p class="p-3">{{ user_post.post }}</p>
+        <!-- Comment Buttons -->
+        <div class="btn-group">
+            <button type="button" class="btn w3-theme-d2">Likes <span class="badge badge-pill badge-secondary">0</span></button>
+            <button type="button" class="btn w3-theme-d2" onclick="$(this).parent().siblings('#comments').slideToggle();">Comments <span class="badge badge-pill badge-secondary">{{ user_post.userpostcomment_set.all|length }}</span></button>
+            <button type="button" class="btn w3-theme-d2">Add Comment</button>
+        </div>
+        <div id="comments" style="display:none;">
+            {% for post_comment in user_post.userpostcomment_set.all %}
+            <div class="media p-3">
+                <img src="{% get_media_prefix %}{{ post_comment.username.avatar }}" alt=" " class="mr-3 mt-3 rounded-circle" style="width:45px;">
+                <div class="media-body">
+                    <h4>{{ post_comment.username.username.first_name }} {{ post_comment.username.username.last_name }} <small><i>{{ post_comment.commentdate }}</i></small></h4>
+                    <p>{{ post_comment.comment }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</article>

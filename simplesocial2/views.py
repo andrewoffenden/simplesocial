@@ -6,6 +6,7 @@ from . import models
 from . import forms
 from django import forms as djforms
 from django.forms import modelform_factory
+from django.db.models import Q
 # Create your views here.
 
 def homepage(request):
@@ -22,6 +23,18 @@ def homepage(request):
     if request.user.is_authenticated:
         userpost = models.UserPost.objects.filter(username__username=request.user).order_by('-postdate')
         context['userpost'] = userpost
+
+        myfriends = models.UserProfile.objects.get(username__username=request.user).friends.all()
+        context['myfriends'] = myfriends
+
+        friendpost = []
+        for x in myfriends:
+            friendpost += models.UserPost.objects.filter(username__username__username=x.username)
+        '''
+        friendpost = models.UserPost.objects.filter(username__username__username='dpost')
+        '''
+        context['friendpost'] = friendpost
+        
     
     return render(request, 'simplesocial2/home.html', context)
 
