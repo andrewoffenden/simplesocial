@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from environ import Env
+# from environ import Env
 
-env = Env()
-env.read_env()
+# env = Env()
+# env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,12 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i)-w0+=!j9warv6(b*y)vq)sx1=(ko!a(k=tzl3wnk7#r6jtb7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG")
-
-ALLOWED_HOSTS = ['*']
-
-
-# Application definition
+DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -169,3 +164,7 @@ except:
 #INTERNAL_IPS += ['127.0.0.1']
 #INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 #INTERNAL_IPS = [ '127.0.0.1']
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
