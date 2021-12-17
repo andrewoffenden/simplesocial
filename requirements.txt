@@ -3,3 +3,6 @@
 django
 gunicorn
 django-heroku
+django-debug-toolbar
+django-allauth
+django-crispy-forms
